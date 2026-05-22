@@ -366,10 +366,16 @@
             </div>
           </article>
           <article class="youtube-card">
-            <a class="youtube-thumb" href="https://www.youtube.com/watch?v=ExqTz-9LVuA" target="_blank" rel="noopener noreferrer">
+            <button
+              class="youtube-thumb youtube-play"
+              type="button"
+              data-video-id="ExqTz-9LVuA"
+              data-youtube-url="https://www.youtube.com/watch?v=ExqTz-9LVuA"
+              aria-label="スズメのチュンチュンをこのページで再生。ダブルクリックでYouTubeを開く"
+            >
               <img src="https://i.ytimg.com/vi/ExqTz-9LVuA/hqdefault.jpg" alt="スズメのチュンチュン Official Music Video">
               <span aria-hidden="true">▶</span>
-            </a>
+            </button>
             <div class="youtube-card-body">
               <span>Official Music Video</span>
               <h3>スズメのチュンチュン</h3>
@@ -379,10 +385,16 @@
             </div>
           </article>
           <article class="youtube-card">
-            <a class="youtube-thumb" href="https://www.youtube.com/watch?v=opq63_Wx-oQ" target="_blank" rel="noopener noreferrer">
+            <button
+              class="youtube-thumb youtube-play"
+              type="button"
+              data-video-id="opq63_Wx-oQ"
+              data-youtube-url="https://www.youtube.com/watch?v=opq63_Wx-oQ"
+              aria-label="チュンチュンいいわけソング！ (Remix) [春]をこのページで再生。ダブルクリックでYouTubeを開く"
+            >
               <img src="https://i.ytimg.com/vi/opq63_Wx-oQ/hqdefault.jpg" alt="チュンチュンいいわけソング！ (Remix) [春] Official Audio">
               <span aria-hidden="true">▶</span>
-            </a>
+            </button>
             <div class="youtube-card-body">
               <span>Official Audio</span>
               <h3>チュンチュンいいわけソング！ (Remix) [春]</h3>
@@ -484,5 +496,27 @@
     <footer class="site-footer">
       <p>&copy; 2026 G-AQUA. All Rights Reserved.</p>
     </footer>
+    <script>
+      document.querySelectorAll(".youtube-play").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.dataset.loaded === "true") {
+            return;
+          }
+
+          const iframe = document.createElement("iframe");
+          iframe.title = button.getAttribute("aria-label") || "G-AQUA YouTube video";
+          iframe.src = `https://www.youtube.com/embed/${button.dataset.videoId}?autoplay=1&rel=0`;
+          iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          iframe.allowFullscreen = true;
+
+          button.dataset.loaded = "true";
+          button.replaceChildren(iframe);
+        });
+
+        button.addEventListener("dblclick", () => {
+          window.open(button.dataset.youtubeUrl, "_blank", "noopener,noreferrer");
+        });
+      });
+    </script>
   </body>
 </html>
