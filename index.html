@@ -505,12 +505,13 @@
 
           const iframe = document.createElement("iframe");
           iframe.title = button.getAttribute("aria-label") || "G-AQUA YouTube video";
+          iframe.className = "youtube-player";
           iframe.src = `https://www.youtube.com/embed/${button.dataset.videoId}?autoplay=1&rel=0`;
           iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
           iframe.allowFullscreen = true;
 
           button.dataset.loaded = "true";
-          button.replaceChildren(iframe);
+          button.replaceWith(iframe);
         });
 
         button.addEventListener("dblclick", () => {
