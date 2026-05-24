@@ -23,6 +23,9 @@
     <meta name="twitter:title" content="G-AQUA 公式ホームページ">
     <meta name="twitter:description" content="G-AQUAの音楽配信、公式MV、ショップ情報をまとめています。">
     <meta name="twitter:image" content="https://g-aqua-production.github.io/website/assets/hero.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="apple-touch-icon" href="assets/favicon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -353,15 +356,21 @@
         </div>
         <div class="youtube-grid" aria-label="G-AQUAのYouTube公式動画">
           <article class="youtube-card">
-            <a class="youtube-thumb upcoming" href="https://linkco.re/Fv35Rf06" target="_blank" rel="noopener noreferrer">
+            <button
+              class="youtube-thumb youtube-play"
+              type="button"
+              data-video-id="SjE_OauvW3g"
+              data-youtube-url="https://www.youtube.com/watch?v=SjE_OauvW3g"
+              aria-label="すずめのあいうえおさんぽ 演歌Ver.をこのページで再生。ダブルクリックでYouTubeを開く"
+            >
               <img src="assets/releases/release-aiueo-enka.png" alt="すずめのあいうえおさんぽ 演歌Ver. ジャケット">
               <span aria-hidden="true">▶</span>
-            </a>
+            </button>
             <div class="youtube-card-body">
-              <span>MV Coming Soon</span>
+              <span>Official Music Video</span>
               <h3>すずめのあいうえおさんぽ 演歌Ver.</h3>
-              <a href="https://linkco.re/Fv35Rf06" target="_blank" rel="noopener noreferrer">
-                配信ページを見る
+              <a href="https://www.youtube.com/watch?v=SjE_OauvW3g" target="_blank" rel="noopener noreferrer">
+                YouTubeで見る
               </a>
             </div>
           </article>
@@ -503,15 +512,26 @@
             return;
           }
 
+          const player = document.createElement("div");
+          player.className = "youtube-player";
+          player.addEventListener("dblclick", () => {
+            window.open(button.dataset.youtubeUrl, "_blank", "noopener,noreferrer");
+          });
+
           const iframe = document.createElement("iframe");
           iframe.title = button.getAttribute("aria-label") || "G-AQUA YouTube video";
-          iframe.className = "youtube-player";
           iframe.src = `https://www.youtube.com/embed/${button.dataset.videoId}?autoplay=1&rel=0`;
           iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
           iframe.allowFullscreen = true;
+          iframe.width = "100%";
+          iframe.height = "100%";
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          iframe.style.border = "0";
 
           button.dataset.loaded = "true";
-          button.replaceWith(iframe);
+          player.appendChild(iframe);
+          button.replaceWith(player);
         });
 
         button.addEventListener("dblclick", () => {
